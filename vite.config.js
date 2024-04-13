@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  base: '/games/greece-map-game/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
