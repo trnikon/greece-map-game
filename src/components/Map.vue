@@ -49,6 +49,12 @@ console.log(greekVoice)
 <script>
 import {LMap, LTileLayer, LGeoJson} from '@vue-leaflet/vue-leaflet';
 import municipalities from '../data/municipalities_simple.json';
+import wrongSound from '@/assets/sounds/wrong.mp3';
+import rightSound from '@/assets/sounds/right.mp3';
+import finishSound from '@/assets/sounds/finish.mp3';
+const wrongAudio = new Audio(wrongSound);
+const rightAudio = new Audio(rightSound);
+const finishAudio = new Audio(finishSound);
 
 const fillColors = ['#f00', '#f0f', '#ff0', '#0f0'];
 
@@ -130,6 +136,7 @@ export default {
         return;
       }
       if (answer === this.gameState.currentMunicipality) {
+        this.playSound(rightAudio)
         this.gameState.score += this.numOfTries;
         // remove the municipality from the list
         this.municipalitiesNames = this.municipalitiesNames.filter(name => name !== this.gameState.currentMunicipality);
@@ -141,6 +148,7 @@ export default {
           this.nextMunicipality();
         }
       } else {
+        this.playSound(wrongAudio)
         this.$refs.answerRef.style.top = `${e.originalEvent.clientY - 5}px`;
         this.$refs.answerRef.style.left = `${e.originalEvent.clientX + 5}px`;
         this.$refs.answerRef.style.display = 'block';
@@ -152,6 +160,13 @@ export default {
           this.nextMunicipality();
         }
       }
+    },
+    playSound(audio) {
+      if (!audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+      audio.play();
     },
     setColor() {
       this.$refs.mapRef.leafletObject.eachLayer(layer => {
@@ -173,6 +188,7 @@ export default {
       // this.speakMunicipalityName(this.gameState.currentMunicipality);
     },
     finishGame() {
+      this.playSound(finishAudio)
       this.gameState.finished = true;
       this.gameState.started = false;
       this.showScore('Τέλος παιχνιδιού', `Το σκορ σας είναι ${this.gameState.score}`);
