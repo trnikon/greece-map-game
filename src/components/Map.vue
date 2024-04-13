@@ -51,7 +51,7 @@ import {LMap, LTileLayer, LGeoJson} from '@vue-leaflet/vue-leaflet';
 import municipalities from '../data/municipalities_simple.json';
 import wrongSound from '@/assets/sounds/wrong.mp3';
 import rightSound from '@/assets/sounds/right.mp3';
-import finishSound from '@/assets/sounds/finish.mp3';
+import finishSound from '@/assets/sounds/finish2.mp3';
 const wrongAudio = new Audio(wrongSound);
 const rightAudio = new Audio(rightSound);
 const finishAudio = new Audio(finishSound);
